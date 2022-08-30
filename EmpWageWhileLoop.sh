@@ -1,35 +1,38 @@
 #!/bin/bash -x
-
-#constant for program
-IsPartTime=1;
-IsFullTime=2;
-MaxHrInMonth=10;
-EmpRatePerHr=20;
-NumOfWorkingDays=20;
- #variables
-totalEmpHr=0;
-totalWorkingdays=0;
-
-while [[ $totalEmpHr -lt $MaxHrInMonth &&
-        $totalWorkingDays -lt $NumOfWorkingDays ]]
+perHourSalary=20;
+workingHour=0;
+totalSalary=0;
+totalWorkingHour=0;
+day=1;
+while [[ $day -le 20 && $totalWorkingHour -lt 100 ]]
 do
-        ((totalWorkingDays++));
-        empCheck=$((RANDOM%3));
-        case $empCheck in
-           $IsFullTime)
-              empHr=8
-                ;;
-           $IsPartTime)
-              empHr=4
-                ;;
-           *)
-              empHr=0
-                ;;
-        esac
-        totalEmpHr=$(($totalEmpHr*$empHr))
+	isPresent=$((RANDOM%3));
+	case $isPresent in
+		0)
+		#echo "Employee is absent";
+		workingHour=0;
+		;;
+
+		1)
+		#echo "Employee is present";
+		workingHour=8;
+		;;
+
+		2)
+		#echo "Employee is working as part time";
+		workingHour=4;
+		;;
+	esac
+	totalWorkingHour=$(($totalWorkingHour + $workingHour));
+	if [ $totalWorkingHour -gt 100 ]
+	then
+		totalWorkingHour=$(($totalWorkingHour - $workingHour));
+		break;
+	fi
+	salary=$(($perHourSalary * $workingHour));
+	totalSalary=$(($totalSalary + $salary));
+	((day++));
 done
-
-totalSalary=$(($totalEmpHr*$EmpRatePerHr));
-
+echo "Employee has earned $totalSalary $ in a month (Total working Hour : $totalWorkingHour)";
 
 
