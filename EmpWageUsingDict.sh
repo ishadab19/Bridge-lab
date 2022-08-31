@@ -7,6 +7,9 @@ NumWorkingDays=20
 
 totalEmpHrs=0
 totalworkingDays=0
+
+declare -A dailyWage;
+
 function getWorkingHours(){
 	case $1 in
 	$isFullTime)
@@ -35,3 +38,5 @@ do
 done
 	totalSalary=$(( $totalWorkingHours * $EmpRatePerHour))
 	echo ${dailyWage[@]}
+        echo ${!dailywage[@]}
+
